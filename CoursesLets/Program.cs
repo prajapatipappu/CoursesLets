@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,8 @@ namespace CoursesLets
             //(3)----------------Multiple Select------------------
 
             Driver.FindElement(By.XPath(" //select[@id='multiple-select-example'] // option[@value='apple']")).Click();
+            Thread.Sleep(2000);
+            Driver.FindElement(By.XPath(" //select[@id='multiple-select-example'] // option[@value='orange']")).Click();
             Thread.Sleep(2000);
 
             //(4) ----------------CheckBox-------------------------
@@ -101,11 +104,39 @@ namespace CoursesLets
 
             //----------------Mouse Hover------------------
 
+            
+            
             js.ExecuteScript("window.scrollBy(0,500)");
             Thread.Sleep(2000);
             Driver.FindElement(By.XPath("//button[@id='mousehover']")).Click();
             //Driver.FindElement(By.XPath("//a[@href='#top']")).Click();
             Thread.Sleep(2000);
+
+
+
+            js.ExecuteScript("window.scrollBy(0,500)");
+            IWebElement top = Driver.FindElement(By.XPath("//button[@id='mousehover']"));
+            top.Click();
+            Thread.Sleep(2000);
+            Actions act = new Actions(Driver);
+
+            act.MoveToElement(Driver.FindElement(By.XPath("//button[@id='mousehover']")))
+                    .KeyDown(Keys.Down)
+                    .Click()
+                .Perform();
+            Thread.Sleep(2000);
+            js.ExecuteScript("window.scrollBy(0,500)");
+            Driver.FindElement(By.XPath("//button[@id='mousehover']"))
+                   .Click();
+            Thread.Sleep(2000);
+            Actions action = new Actions(Driver);
+            action.MoveToElement(Driver.FindElement(By.XPath("//button[@id='mousehover']")))
+
+                .KeyDown(Keys.Down)
+                .KeyDown(Keys.Down)
+                .Click()
+                .Perform();
+            Thread.Sleep(10000);
 
             Driver.Close();
             Driver.Quit();
